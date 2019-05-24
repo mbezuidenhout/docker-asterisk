@@ -5,7 +5,9 @@
 FROM ubuntu:latest
 MAINTAINER Marius Bezuidenhout "marius.bezuidenhout@gmail.com"
 
-RUN apt-get update &&\
+ENV TZ Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &&\
+    apt-get update &&\
     apt-get install --no-install-recommends --assume-yes --quiet \
         asterisk asterisk-config asterisk-core-sounds-en asterisk-core-sounds-en-gsm asterisk-modules asterisk-moh-opsound-gsm asterisk-voicemail \
         ca-certificates curl git systemd-cron &&\

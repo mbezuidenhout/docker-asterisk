@@ -43,7 +43,8 @@ else
     export ASTERISK_RUN_USER=asterisk
 fi
 
-if [[ "$1" == asterisk* ]]; then
+if [ "$1" == 'asterisk' ]; then
+    exec asterisk -U ${ASTERISK_RUN_USER} -G ${ASTERISK_RUN_GROUP} -vvv
 fi
 
 exec "$@"
