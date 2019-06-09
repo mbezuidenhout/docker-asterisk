@@ -36,6 +36,8 @@ fi
 if [ -n "${ASTERISK_RUN_UID:-}" ]; then
     if [ ! $(getent passwd pbx) ]; then
         adduser --gecos "" --ingroup ${ASTERISK_RUN_GROUP} --no-create-home --disabled-password --disabled-login --uid ${ASTERISK_RUN_UID} pbx
+        usermod -G audio pbx
+        usermod -G dialout pbx
     fi
     export ASTERISK_RUN_USER=pbx
     echo "Changing service UID to ${ASTERISK_RUN_UID}."
@@ -44,6 +46,24 @@ else
 fi
 
 if [ "$1" == 'asterisk' ]; then
+    if [ ! -e asterisk.conf ]; then
+        echo >&2 "Asterisk config not found in $PWD - copying default config now..."
+        if [ -n "$(ls -A)" ]; then
+            echo >&2 "WARNING: $PWD is not empty! (copying anyhow)"
+        fi
+        sourceTarArgs=(
+            --create
+            --file -
+            --directory /usr/src/asterisk
+            --owner "$ASTERISK_RUN_USER" --group "$ASTERISK_RUN_GROUP"
+        )
+        targetTarArgs=(
+            --extract
+            --file -
+        )
+        tar "${sourceTarArgs[@]}" . | tar "${targetTarArgs[@]}"
+        echo >&2 "Complete! Asterisk default config has been successfully copied to $PWD"
+    fi
     exec asterisk -U ${ASTERISK_RUN_USER} -G ${ASTERISK_RUN_GROUP} -vvv
 fi
 
