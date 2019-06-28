@@ -30,7 +30,7 @@ if [ -n "${ASTERISK_RUN_GID:-}" ]; then
     export ASTERISK_RUN_GROUP=pbx
     echo "Changing service GID to ${ASTERISK_RUN_GID}."
 else
-    export ASTERISK_RUN_GROUP=asterisk
+    export ASTERISK_RUN_GROUP=dialout
 fi
 
 if [ -n "${ASTERISK_RUN_UID:-}" ]; then
@@ -64,7 +64,7 @@ if [ "$1" == 'asterisk' ]; then
         tar "${sourceTarArgs[@]}" . | tar "${targetTarArgs[@]}"
         echo >&2 "Complete! Asterisk default config has been successfully copied to $PWD"
     fi
-    exec asterisk -U ${ASTERISK_RUN_USER} -G ${ASTERISK_RUN_GROUP} -vvv
+    exec asterisk -U ${ASTERISK_RUN_USER} -G ${ASTERISK_RUN_GROUP} -fvvv
 fi
 
 exec "$@"

@@ -2,20 +2,18 @@
 # Asterisk Dockerfile
 #
 
-FROM ubuntu:latest
+FROM alpine:3.8.4
 LABEL maintainer="Marius Bezuidenhout <marius.bezuidenhout@gmail.com>"
 
 ENV TZ Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &&\
-    apt-get update &&\
-    apt-get install --no-install-recommends --assume-yes --quiet \
-        asterisk asterisk-config asterisk-core-sounds-en asterisk-core-sounds-en-gsm asterisk-modules asterisk-moh-opsound-gsm asterisk-voicemail \
-        ca-certificates curl git systemd-cron &&\
-    apt-get clean &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    mv /etc/asterisk /usr/src &&\
-    mkdir /etc/asterisk &&\
-    ldconfig
+    apk add --no-cache asterisk ca-certificates curl bash tar asterisk-sample-config asterisk-sounds-en asterisk-sounds-moh &&\
+    rm -rf /var/cache/apk/* \
+           /tmp/* \
+           /var/tmp/* &&\
+    rm -f /etc/init.d/asterisk &&\
+    mkdir /usr/src && mv /etc/asterisk /usr/src &&\
+    mkdir /etc/asterisk
 
 WORKDIR /etc/asterisk
 VOLUME ["/etc/asterisk"]
