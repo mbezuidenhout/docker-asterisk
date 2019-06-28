@@ -2,7 +2,7 @@
 # Asterisk Dockerfile
 #
 
-FROM alpine:3.8.4
+FROM arm32v6/alpine:3.8.4
 LABEL maintainer="Marius Bezuidenhout <marius.bezuidenhout@gmail.com>"
 
 ENV TZ Etc/UTC
