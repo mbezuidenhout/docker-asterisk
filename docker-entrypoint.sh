@@ -39,6 +39,7 @@ if [ -n "${ASTERISK_RUN_UID:-}" ]; then
 	adduser -g "" -G ${ASTERISK_RUN_GROUP} -H -D -s /bin/nologin -u ${ASTERISK_RUN_UID} pbx
         usermod -G audio pbx
         usermod -G dialout pbx
+	find . -user asterisk -exec chown pbx '{}' \;
     fi
     export ASTERISK_RUN_USER=pbx
     echo "Changing service UID to ${ASTERISK_RUN_UID}."
