@@ -35,7 +35,8 @@ fi
 
 if [ -n "${ASTERISK_RUN_UID:-}" ]; then
     if [ ! $(getent passwd pbx) ]; then
-        adduser --gecos "" --ingroup ${ASTERISK_RUN_GROUP} --no-create-home --disabled-password --disabled-login --uid ${ASTERISK_RUN_UID} pbx
+        #adduser --gecos "" --ingroup ${ASTERISK_RUN_GROUP} --no-create-home --disabled-password --disabled-login --uid ${ASTERISK_RUN_UID} pbx
+	adduser -g "" -G ${ASTERISK_RUN_GROUP} -H -D -s /bin/nologin -u ${ASTERISK_RUN_UID} pbx
         usermod -G audio pbx
         usermod -G dialout pbx
     fi
