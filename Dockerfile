@@ -7,7 +7,7 @@ LABEL maintainer="Marius Bezuidenhout <marius.bezuidenhout@gmail.com>"
 
 ENV TZ Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &&\
-    apk add --no-cache asterisk ca-certificates curl bash tar asterisk-sample-config asterisk-sounds-en asterisk-sounds-moh &&\
+    apk add --no-cache shadow asterisk ca-certificates curl bash tar asterisk-sample-config asterisk-sounds-en asterisk-sounds-moh &&\
     rm -rf /var/cache/apk/* \
            /tmp/* \
            /var/tmp/* &&\
