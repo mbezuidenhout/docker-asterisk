@@ -66,7 +66,7 @@ if [ ! -e /etc/postfix/main.cf ]; then
     echo >&2 "Complete! Postfix default config has been successfully copied to /etc/postfix"
 fi
 echo "Starting Postfix"
-exec /usr/sbin/postfix -c /etc/postfix start
+/usr/sbin/postfix -c /etc/postfix start
 
 if [ "$1" == 'asterisk' ]; then
     if [ ! -e asterisk.conf ]; then
