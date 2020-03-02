@@ -47,6 +47,27 @@ else
     export ASTERISK_RUN_USER=asterisk
 fi
 
+# Starting postfix
+if [ ! -e /etc/postfix/main.cf ]; then
+    echo >&2 "Postfix config not found in /etc/postfix - copying default config now..."
+    if [ -n "$(ls -A)" ]; then
+        echo >&2 "WARNING: /etc/postfix is not empty! (copying anyhow)"
+    fi
+    sourceTarArgs=(
+        --create
+        --file -
+        --directory /usr/src/postfix
+    )	
+    targetTarArgs=(
+        --extract
+        --file -
+    )
+    tar "${sourceTarArgs[@]}" . | tar "${targetTarArgs[@]}"
+    echo >&2 "Complete! Postfix default config has been successfully copied to /etc/postfix"
+fi
+echo "Starting Postfix"
+/usr/sbin/postfix -c /etc/postfix start
+
 if [ "$1" == 'asterisk' ]; then
     if [ ! -e asterisk.conf ]; then
         echo >&2 "Asterisk config not found in $PWD - copying default config now..."
