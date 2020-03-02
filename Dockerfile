@@ -12,8 +12,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
            /tmp/* \
            /var/tmp/* &&\
     rm -f /etc/init.d/asterisk &&\
-    mkdir /usr/src && mv /etc/asterisk /usr/src &&\
-    mkdir /etc/asterisk
+    mkdir /usr/src && mv /etc/asterisk /usr/src && mv /etc/postfix /usr/src &&\
+    mkdir /etc/asterisk && mkdir /etc/postfix
 
 WORKDIR /etc/asterisk
 VOLUME ["/etc/asterisk"]
