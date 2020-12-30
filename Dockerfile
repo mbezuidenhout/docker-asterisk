@@ -20,6 +20,7 @@ VOLUME ["/etc/asterisk"]
 EXPOSE 5060/udp 5060/tcp 6060/udp 6060/tcp 16384/udp 16385/udp 16386/udp 16387/udp 16388/udp 16389/udp 16390/udp 16391/udp 16392/udp 16393/udp 16394/udp
 
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["asterisk"]
