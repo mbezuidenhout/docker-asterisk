@@ -61,6 +61,7 @@ if [ ! -e /etc/postfix/main.cf ]; then
     targetTarArgs=(
         --extract
         --file -
+        --directory /etc/postfix
     )
     tar "${sourceTarArgs[@]}" . | tar "${targetTarArgs[@]}"
     echo >&2 "Complete! Postfix default config has been successfully copied to /etc/postfix"
